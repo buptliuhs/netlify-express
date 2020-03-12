@@ -8,7 +8,16 @@ const bodyParser = require('body-parser');
 const router = express.Router();
 router.get('/', (req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.write('<h1>Hello from Express.js!</h1><script src="https://www.google.com/recaptcha/api.js?render=6LemsuAUAAAAAKzrKt3BzrCOyN86FJRDD48MlXQm"></script>');
+  const body = '<h1>Hello from Express.js!</h1>'
+             + '<script src="https://www.google.com/recaptcha/api.js?render=6LemsuAUAAAAAKzrKt3BzrCOyN86FJRDD48MlXQm"></script>'
+             + '<script>'
+             + '  grecaptcha.ready(function() {'
+             + '    grecaptcha.execute(\'6LemsuAUAAAAAKzrKt3BzrCOyN86FJRDD48MlXQm\', {action: \'homepage\'}).then(function(token) {'
+             + '    console.log(token);'
+             + '  });'
+             + '});'
+             + '</script>';
+  res.write(body);
   res.end();
 });
 router.get('/another', (req, res) => res.json({ route: req.originalUrl }));
